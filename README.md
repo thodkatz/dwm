@@ -2,7 +2,7 @@
 
 dwm is an extremely fast, small, and dynamic window manager for X.
 
-# Personal config
+# Yet another config
 
 ![config](rice.png)
 
@@ -13,6 +13,7 @@ List of [patches](https://dwm.suckless.org/patches/):
 - bottomstack
 - alternativetags
 - gridmode
+- hide-vacant-tags
 
 ## Dependencies
 - libxft-bgra
