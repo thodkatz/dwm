@@ -46,3 +46,16 @@ Configuration
 -------------
 The configuration of dwm is done by creating a custom config.h
 and (re)compiling the source code.
+
+# Personal config
+
+List of [patches](https://dwm.suckless.org/patches/):
+- autostart
+- dwmblocks
+- centermaster
+- bottomstack
+- alternativetags
+
+## Dependencies
+- libxft-bgra
+- ttf-joypixels (font for emoji)
