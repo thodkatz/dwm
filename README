@@ -49,12 +49,15 @@ and (re)compiling the source code.
 
 # Personal config
 
+
+
 List of [patches](https://dwm.suckless.org/patches/):
 - autostart
 - dwmblocks
 - centermaster
 - bottomstack
 - alternativetags
+- gridmode
 
 ## Dependencies
 - libxft-bgra
