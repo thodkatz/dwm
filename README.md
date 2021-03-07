@@ -14,6 +14,7 @@ List of [patches](https://dwm.suckless.org/patches/):
 - alternativetags
 - gridmode
 - hide-vacant-tags
+- pertag
 
 ## Dependencies
 - libxft-bgra
