@@ -1422,8 +1422,8 @@ run(void)
 
 void
 runAutostart(void) {
-	system("cd ~/repos/dwm; ./autostart_blocking.sh");
-	system("cd ~/repos/dwm; ./autostart.sh &");
+	system("cd ~/repos/personal/dwm; ./autostart_blocking.sh");
+	system("cd ~/repos/personal/dwm; ./autostart.sh &");
 }
 
 void
