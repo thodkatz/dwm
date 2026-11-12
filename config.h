@@ -9,16 +9,15 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Hack Nerd Font:size=11" };
 static const char dmenufont[]       = "Hack Nerd Font:size=11";
-/* noir palette: black and white with a brass accent */
+/* noir palette: black and white with a dark cherry accent */
 static const char col_bg[]          = "#0e0e0e"; /* bar background */
 static const char col_fg[]          = "#d8d8d8"; /* bar text */
 static const char col_dim[]         = "#2a2a2a"; /* inactive window border */
-static const char col_black[]       = "#0e0e0e"; /* text on the accent */
-static const char col_brass[]       = "#c9a227"; /* selected tag, active window border */
+static const char col_red[]         = "#6b0f1a"; /* dark cherry: selected tag, active window border */
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_fg,    col_bg,    col_dim   },
-	[SchemeSel]  = { col_black, col_brass, col_brass },
+	[SchemeSel]  = { col_fg,    col_red,   col_red   },
 };
 
 /* tagging */
@@ -68,11 +67,13 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_fg, "-sb", col_brass, "-sf", col_black, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_fg, "-sb", col_red, "-sf", col_fg, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *lockcmd[]  = { "i3lock", NULL };
 /* sound: change the default sink, then refresh dwmblocks' volume block (signal 10) */
 #define VOLCMD(args) SHCMD("pactl " args " && pkill -RTMIN+10 " STATUSBAR)
+/* backlight: change it (never below 1, so never fully off), then refresh dwmblocks' brightness block (signal 11) */
+#define BRICMD(args) SHCMD("brightnessctl -q -n 1 set " args " && pkill -RTMIN+11 " STATUSBAR)
 
 
 static Key keys[] = {
@@ -121,6 +122,8 @@ static Key keys[] = {
 	{ 0,                       XF86XK_AudioLowerVolume, spawn, VOLCMD("set-sink-volume @DEFAULT_SINK@ -5%") },
 	{ 0,                       XF86XK_AudioMute,        spawn, VOLCMD("set-sink-mute @DEFAULT_SINK@ toggle") },
 	{ 0,                       XF86XK_AudioRaiseVolume, spawn, VOLCMD("set-sink-volume @DEFAULT_SINK@ +5%") },
+	{ 0,                       XF86XK_MonBrightnessDown, spawn, BRICMD("5%-") },
+	{ 0,                       XF86XK_MonBrightnessUp,   spawn, BRICMD("+5%") },
 };
 
 /* button definitions */
