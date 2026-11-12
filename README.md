@@ -15,7 +15,9 @@ List of [patches](https://dwm.suckless.org/patches/):
 - gridmode
 - hide-vacant-tags
 - pertag
+- status2d
+- statuscmd (status2d variant, signals dwmblocks)
 
 ## Dependencies
-- libxft-bgra
-- ttf-joypixels (font for emoji)
+- ttf-hack-nerd (bar, dmenu and status icons)
+- [dwmblocks](https://github.com/thodkatz/dwmblocks) with the statuscmd patch, on PATH

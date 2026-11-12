@@ -7,22 +7,18 @@ static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "-*-hack-medium-r-normal-*-17-*-*-*-*-*-*-*:size=12", "Joypixels:Pixelsize=12"};
-static const char dmenufont[]       = "-*-hack-medium-r-normal-*-17-*-*-*-*-*-*-*:size=11";
-// background color
-static const char col_gray1[]       = "#444444";
-// inactive window border color
-static const char col_gray2[]       = "#444444";
-// font color
-static const char col_gray3[]       = "#ffffff";
-// curent tag and current window font color
-static const char col_gray4[]       = "#ffffff";
-// Top bar color and active window border color
-static const char col_cyan[]        = "#5e03fc";
+static const char *fonts[]          = { "Hack Nerd Font:size=11" };
+static const char dmenufont[]       = "Hack Nerd Font:size=11";
+/* noir palette: black and white with a brass accent */
+static const char col_bg[]          = "#0e0e0e"; /* bar background */
+static const char col_fg[]          = "#d8d8d8"; /* bar text */
+static const char col_dim[]         = "#2a2a2a"; /* inactive window border */
+static const char col_black[]       = "#0e0e0e"; /* text on the accent */
+static const char col_brass[]       = "#c9a227"; /* selected tag, active window border */
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeNorm] = { col_fg,    col_bg,    col_dim   },
+	[SchemeSel]  = { col_black, col_brass, col_brass },
 };
 
 /* tagging */
@@ -72,13 +68,11 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_fg, "-sb", col_brass, "-sf", col_black, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *lockcmd[]  = { "i3lock", NULL };
-// sound
-static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
-static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
-static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
+/* sound: change the default sink, then refresh dwmblocks' volume block (signal 10) */
+#define VOLCMD(args) SHCMD("pactl " args " && pkill -RTMIN+10 " STATUSBAR)
 
 
 static Key keys[] = {
@@ -124,9 +118,9 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
 
-   	{ 0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
-	{ 0,                       XF86XK_AudioMute, spawn, {.v = mutevol } },
-	{ 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } }, 
+	{ 0,                       XF86XK_AudioLowerVolume, spawn, VOLCMD("set-sink-volume @DEFAULT_SINK@ -5%") },
+	{ 0,                       XF86XK_AudioMute,        spawn, VOLCMD("set-sink-mute @DEFAULT_SINK@ toggle") },
+	{ 0,                       XF86XK_AudioRaiseVolume, spawn, VOLCMD("set-sink-volume @DEFAULT_SINK@ +5%") },
 };
 
 /* button definitions */
@@ -139,6 +133,8 @@ static Button buttons[] = {
 	{ ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1} },
 	{ ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2} },
 	{ ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
+	{ ClkStatusText,        0,              Button4,        sigstatusbar,   {.i = 4} },
+	{ ClkStatusText,        0,              Button5,        sigstatusbar,   {.i = 5} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
