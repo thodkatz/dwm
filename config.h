@@ -9,11 +9,11 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Hack Nerd Font:size=11" };
 static const char dmenufont[]       = "Hack Nerd Font:size=11";
-/* noir palette: black and white with a dark cherry accent */
-static const char col_bg[]          = "#0e0e0e"; /* bar background */
+/* maroon palette: dark maroon bar and accent, white text */
+static const char col_bg[]          = "#2b0808"; /* bar background: darkest maroon */
 static const char col_fg[]          = "#d8d8d8"; /* bar text */
 static const char col_dim[]         = "#2a2a2a"; /* inactive window border */
-static const char col_red[]         = "#6b0f1a"; /* dark cherry: selected tag, active window border */
+static const char col_red[]         = "#5c1414"; /* dark maroon: selected tag, active window border */
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_fg,    col_bg,    col_dim   },
