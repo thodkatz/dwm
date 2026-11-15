@@ -1,41 +1,40 @@
+# succeed once there is a default route, give up after $1 seconds
+wait_for_network() {
+    tries=0
+    while [ "$tries" -lt "$1" ]; do
+        ip route get 1.1.1.1 >/dev/null 2>&1 && return 0
+        tries=$((tries + 1))
+        sleep 1
+    done
+    return 1
+}
+
+# open a terminal that ssh-es into $2 and runs fleet, falling back to a
+# login shell when fleet exits; $1 is the window class used by rules[]
+ssh_fleet() {
+    alacritty --class "$1,$1" -e ssh -t "$2" '$SHELL -lc "fleet --local; exec $SHELL -l"' &
+}
+
 configure_start_apps() {
+    # tag placement is handled by rules[] in config.h (matched on WM_CLASS)
     firefox &
-    sleep 2
-    xdotool key Super_L+shift+2
-
     obsidian &
-    sleep 2
-    xdotool key Super_L+shift+1
-
-    thunderbird &
-    sleep 2
-    xdotool key Super_L+shift+9
-
-    spotify &
-    sleep 2
-    xdotool key Super_L+shift+3
-
+    tidal-hifi &
     chromium &
-    sleep 2
-    xdotool key Super_L+shift+4
+    # custom class so only this terminal is pinned, not every alacritty window
+    alacritty --class autostart-shell,autostart-shell &
+
+    # network-dependent apps: wait up to 30s for a connection, skip if none
+    (
+        if wait_for_network 30; then
+            thunderbird &
+            ssh_fleet ssh-nixos theo@nixos
+            ssh_fleet ssh-thinkcentre theo@thinkcentre
+        fi
+    ) &
 }
 
-configure_display_home() {
-    if xrandr | grep "DP-1-1 connected"; then
-        xrandr --output DP-1-1 --primary --output eDP-1 --off
-    else
-        xrandr --output eDP-1 --primary
-    fi
-}
-
-# DISPLAY
-#xrandr --output eDP-1 --same-as HDMI-1
-
-#xrandr --output HDMI-1 --primary --output eDP-1 --off
-
-configure_display_home
-
-feh --bg-fill tomatsu_cloud_sea.jpg
+feh --bg-fill best_wallpaper_jazz_2.png
 
 setxkbmap -v -layout us,gr -option 'grp:alt_shift_toggle'
 

@@ -29,9 +29,20 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class         instance    title       tags mask     isfloating   monitor */
+	{ "Gimp",        NULL,       NULL,       0,            1,           -1 },
+	/* pin apps to tags; class names differ across versions, so match both spellings */
+	{ "obsidian",    NULL,       NULL,       1 << 0,       0,           -1 },
+	{ "firefox",     NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "Firefox",     NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "tidal-hifi",  NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "chromium",    NULL,       NULL,       1 << 3,       0,           -1 },
+	{ "Chromium",    NULL,       NULL,       1 << 3,       0,           -1 },
+	{ "ssh-nixos",   NULL,       NULL,       1 << 3,       0,           -1 },
+	{ "ssh-thinkcentre", NULL,   NULL,       1 << 4,       0,           -1 },
+	{ "autostart-shell", NULL,   NULL,       1 << 5,       0,           -1 },
+	{ "thunderbird", NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Thunderbird", NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
