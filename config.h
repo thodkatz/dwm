@@ -130,11 +130,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
 
-	{ 0,                       XF86XK_AudioLowerVolume, spawn, VOLCMD("set-sink-volume @DEFAULT_SINK@ -5%") },
-	{ 0,                       XF86XK_AudioMute,        spawn, VOLCMD("set-sink-mute @DEFAULT_SINK@ toggle") },
-	{ 0,                       XF86XK_AudioRaiseVolume, spawn, VOLCMD("set-sink-volume @DEFAULT_SINK@ +5%") },
-	{ 0,                       XF86XK_MonBrightnessDown, spawn, BRICMD("5%-") },
-	{ 0,                       XF86XK_MonBrightnessUp,   spawn, BRICMD("+5%") },
 };
 
 /* button definitions */
